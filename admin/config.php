@@ -23,8 +23,8 @@ define('DIR_CATALOG', 'D:/website/manga/catalog/');
 // DB
 define('DB_DRIVER', 'mysql');
 define('DB_HOSTNAME', 'localhost');
-define('DB_USERNAME', 'root');
-define('DB_PASSWORD', '');
+define('DB_USERNAME', 'david');
+define('DB_PASSWORD', '84655419');
 define('DB_DATABASE', 'manga');
 define('DB_PREFIX', 'dc_');
 ?>

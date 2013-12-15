@@ -167,6 +167,11 @@ $(document).ready(function(){
           <li><a href="<?php echo $contact; ?>"><?php echo $text_contact; ?></a></li>
         </ul>
       </li>
+      <li id="manga"><a class="top"><?php echo $text_manga; ?></a>
+          <ul>
+              <li><a href="<?php echo $manga; ?>"><?php echo $text_manga; ?></a></li>
+          </ul>
+      </li>
       <li id="system"><a class="top"><?php echo $text_system; ?></a>
         <ul>
           <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>
