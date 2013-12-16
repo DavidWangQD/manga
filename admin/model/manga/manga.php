@@ -1,71 +1,31 @@
 <?php
 class ModelMangaManga extends Model {
 	public function addCategory($data) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "category SET parent_id = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', sort_order = '" . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . "', date_modified = NOW(), date_added = NOW()");
 
-		$category_id = $this->db->getLastId();
-				
-		if (isset($data['image'])) {
-			$this->db->query("UPDATE " . DB_PREFIX . "category SET image = '" . $this->db->escape(html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8')) . "' WHERE category_id = '" . (int)$category_id . "'");
-		}
-		
-		foreach ($data['category_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "category_description SET category_id = '" . (int)$category_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', description = '" . $this->db->escape($value['description']) . "'");
-		}
+        //insert to the table manga
+        $this->db->query("INSERT INTO " . DB_PREFIX . "manga SET meta_description = '" . $this->db->escape($data['meta_description']) . "', meta_keyword = '" . $this->db->escape($data['meta_keyword']) . "', image = '" . $this->db->escape($data['image']) . "', sort_order = '" . $this->db->escape($data['sort_order']) . "', `status` = '" . $this->db->escape($data['status']) . "', `show` = '". $this->db->escape($data['show']) . "'");
 
-		// MySQL Hierarchical Data Closure Table Pattern
-		$level = 0;
-		
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_path` WHERE category_id = '" . (int)$data['parent_id'] . "' ORDER BY `level` ASC");
-		
-		foreach ($query->rows as $result) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "category_path` SET `category_id` = '" . (int)$category_id . "', `path_id` = '" . (int)$result['path_id'] . "', `level` = '" . (int)$level . "'");
-			
-			$level++;
-		}
-		
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "category_path` SET `category_id` = '" . (int)$category_id . "', `path_id` = '" . (int)$category_id . "', `level` = '" . (int)$level . "'");
+        $manga_id = $this->db->getLastId();
 
-		if (isset($data['category_filter'])) {
-			foreach ($data['category_filter'] as $filter_id) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "category_filter SET category_id = '" . (int)$category_id . "', filter_id = '" . (int)$filter_id . "'");
-			}
-		}
-				
-		if (isset($data['category_store'])) {
-			foreach ($data['category_store'] as $store_id) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "category_to_store SET category_id = '" . (int)$category_id . "', store_id = '" . (int)$store_id . "'");
-			}
-		}
-		
-		// Set which layout to use with this category
-		if (isset($data['category_layout'])) {
-			foreach ($data['category_layout'] as $store_id => $layout) {
-				if ($layout['layout_id']) {
-					$this->db->query("INSERT INTO " . DB_PREFIX . "category_to_layout SET category_id = '" . (int)$category_id . "', store_id = '" . (int)$store_id . "', layout_id = '" . (int)$layout['layout_id'] . "'");
-				}
-			}
-		}
-						
-		if ($data['keyword']) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'category_id=" . (int)$category_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
-		}
-		
-		$this->cache->delete('category');
-	}
+        //insert to the table manga_description
+        if($manga_id) {
+            $this->db->query("INSERT INTO " . DB_PREFIX . "manga_description SET manga_id = '" . (int)$manga_id . "', language_id = '" . (int)$this->config->get('config_language_id') . "', author = '" . $this->db->escape($data['author']) . "', title = '" . $this->db->escape($data['title']) . "', description = '" . $this->db->escape($data['description']) . "'");
+        }
+
+        //insert into the table seo_keyword
+        if ($data['keyword']) {
+            $this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'manga_id=" . (int)$manga_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
+        }
+
+    }
 	
 	public function editManga($manga_id, $data) {
 
-//        $asd = "UPDATE " . DB_PREFIX . "manga SET meta_description = '" . $data['meta_description'] . "', meta_keyword = '" . $data['meta_description'] . "', image = '" . $data['image'] . "', sort_order = '" . $data['sort_order'] . "', `status` = '" . $data['sort_order'] . "', `show` = '". $data['sort_order'] . "' WHERE manga_id = " . $manga_id . "'";
-//        echo $asd;exit();
-
-//        $test = "UPDATE " . DB_PREFIX . "manga_description SET author = '" . $data['author'] . "', title = '" . $data['title'] . "', description = '" . $data['description'] . "' WHERE manga_id = " . $manga_id . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'";
-//        echo $test;exit();
         //update the table managa
-		$this->db->query("UPDATE " . DB_PREFIX . "manga SET meta_description = '" . $data['meta_description'] . "', meta_keyword = '" . $data['meta_description'] . "', image = '" . $data['image'] . "', sort_order = '" . $data['sort_order'] . "', `status` = '" . $data['sort_order'] . "', `show` = '". $data['sort_order'] . "' WHERE manga_id = '" . $manga_id . "'");
+		$this->db->query("UPDATE " . DB_PREFIX . "manga SET meta_description = '" . $this->db->escape($data['meta_description']) . "', meta_keyword = '" . $this->db->escape($data['meta_keyword']) . "', image = '" . $this->db->escape($data['image']) . "', sort_order = '" . $this->db->escape($data['sort_order']) . "', `status` = '" . $this->db->escape($data['status']) . "', `show` = '". $this->db->escape($data['show']) . "' WHERE manga_id = '" . (int)$manga_id . "'");
 
         //update the table manga_description
-        $this->db->query("UPDATE " . DB_PREFIX . "manga_description SET author = '" . $data['author'] . "', title = '" . $data['title'] . "', description = '" . $data['description'] . "' WHERE manga_id = '" . $manga_id . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+        $this->db->query("UPDATE " . DB_PREFIX . "manga_description SET author = '" . $this->db->escape($data['author']) . "', title = '" . $this->db->escape($data['title']) . "', description = '" . $this->db->escape($data['description']) . "' WHERE manga_id = '" . (int)$manga_id . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
         //update seo_keyword
         $this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'manga_id=" . (int)$manga_id. "'");
@@ -76,25 +36,18 @@ class ModelMangaManga extends Model {
 
     }
 	
-	public function deleteCategory($category_id) {
-		$this->db->query("DELETE FROM " . DB_PREFIX . "category_path WHERE category_id = '" . (int)$category_id . "'");
-		
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "category_path WHERE path_id = '" . (int)$category_id . "'");
-			
-		foreach ($query->rows as $result) {	
-			$this->deleteCategory($result['category_id']);
-		}
-		
-		$this->db->query("DELETE FROM " . DB_PREFIX . "category WHERE category_id = '" . (int)$category_id . "'");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "category_description WHERE category_id = '" . (int)$category_id . "'");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "category_filter WHERE category_id = '" . (int)$category_id . "'");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "category_to_store WHERE category_id = '" . (int)$category_id . "'");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "category_to_layout WHERE category_id = '" . (int)$category_id . "'");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "product_to_category WHERE category_id = '" . (int)$category_id . "'");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'category_id=" . (int)$category_id . "'");
-		
-		$this->cache->delete('category');
-	} 
+	public function deleteManga($manga_id) {
+
+        //delete from the table manga
+		$this->db->query("DELETE FROM " . DB_PREFIX . "manga WHERE manga_id = '" . $manga_id . "'");
+
+        //delete from the table manga_description
+        $this->db->query("DELETE FROM " . DB_PREFIX . "manga_description WHERE manga_id = '" . $manga_id . "'");
+
+        //delete from the table dc_url_alias
+        $this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'manga_id=" . $manga_id . "'");
+
+    }
 	
 	// Function to repair any erroneous categories that are not in the category path table.
 	public function repairCategories($parent_id = 0) {
@@ -122,13 +75,13 @@ class ModelMangaManga extends Model {
 	}
 			
 	public function getManga($manga_id) {
-		$query = $this->db->query("SELECT dm.*, dmd.author, dmd.title, dmd.description, (SELECT keyword FROM " . DB_PREFIX . "url_alias WHERE query = 'manga_id=".$manga_id."') AS keyword FROM " . DB_PREFIX . "manga AS dm LEFT JOIN " . DB_PREFIX . "manga_description AS dmd ON dm.manga_id = dmd.manga_id WHERE dmd.language_id = '".(int)$this->config->get('config_language_id')."'");
+		$query = $this->db->query("SELECT m.*, md.author, md.title, md.description, (SELECT keyword FROM " . DB_PREFIX . "url_alias WHERE query = 'manga_id=".$manga_id."') AS keyword FROM " . DB_PREFIX . "manga AS m LEFT JOIN " . DB_PREFIX . "manga_description AS md ON m.manga_id = md.manga_id WHERE m.manga_id ='" . (int)$manga_id . "' AND md.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
 	} 
 	
 	public function getMangas($data) {
-		$sql = "SELECT dm.manga_id, dmd.title, dm.sort_order FROM " . DB_PREFIX . "manga AS dm LEFT JOIN " . DB_PREFIX . "manga_description AS dmd ON dm.manga_id = dmd.manga_id";
+		$sql = "SELECT m.manga_id, md.title, m.sort_order FROM " . DB_PREFIX . "manga AS m LEFT JOIN " . DB_PREFIX . "manga_description AS md ON m.manga_id = md.manga_id";
 		
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {

@@ -43,8 +43,7 @@ class ControllerMangaManga extends Controller {
 		
 		$this->load->model('manga/manga');
 		
-		//if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-		if (($this->request->server['REQUEST_METHOD'] == 'POST')) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_manga_manga->editManga($this->request->get['manga_id'], $this->request->post);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -70,7 +69,7 @@ class ControllerMangaManga extends Controller {
 		
 		if (isset($this->request->post['selected']) && $this->validateDelete()) {
 			foreach ($this->request->post['selected'] as $manga_id) {
-				$this->model_manga_manga->deleteCategory($manga_id);
+				$this->model_manga_manga->deleteManga($manga_id);
 			}
 
 			$this->session->data['success'] = $this->language->get('text_success');

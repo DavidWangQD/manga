@@ -3,7 +3,7 @@
 $_['heading_title']          = 'Manga';
 
 // Text
-$_['text_success']           = 'Success: You have modified categories!';
+$_['text_success']           = 'Success: You have modified mangas!';
 $_['text_default']           = 'Default';
 $_['text_image_manager']     = 'Image Manager';
 $_['text_browse']            = 'Browse';
@@ -30,6 +30,6 @@ $_['entry_viewed']           = 'Viewed:';
 
 // Error 
 $_['error_warning']          = 'Warning: Please check the form carefully for errors!';
-$_['error_permission']       = 'Warning: You do not have permission to modify categories!';
+$_['error_permission']       = 'Warning: You do not have permission to modify mangas!';
 $_['error_name']             = 'Title must be between 1 and 255 characters!';
 ?>
