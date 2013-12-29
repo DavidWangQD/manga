@@ -1,11 +1,11 @@
 <?php
 // HTTP
-define('HTTP_SERVER', 'http://mymanga.test/admin/');
-define('HTTP_CATALOG', 'http://mymanga.test/');
+define('HTTP_SERVER', 'http://manga.test/admin/');
+define('HTTP_CATALOG', 'http://manga.test/');
 
 // HTTPS
-define('HTTPS_SERVER', 'http://mymanga.test/admin/');
-define('HTTPS_CATALOG', 'http://mymanga.test/');
+define('HTTPS_SERVER', 'http://manga.test/admin/');
+define('HTTPS_CATALOG', 'http://manga.test/');
 
 // DIR
 define('DIR_APPLICATION', 'D:/website/manga/admin/');
@@ -23,8 +23,9 @@ define('DIR_CATALOG', 'D:/website/manga/catalog/');
 // DB
 define('DB_DRIVER', 'mysql');
 define('DB_HOSTNAME', 'localhost');
-define('DB_USERNAME', 'david');
-define('DB_PASSWORD', '84655419');
+define('DB_USERNAME', 'root');
+define('DB_PASSWORD', '');
 define('DB_DATABASE', 'manga');
 define('DB_PREFIX', 'dc_');
+
 ?>
