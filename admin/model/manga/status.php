@@ -52,9 +52,19 @@ class ModelMangaStatus extends Model {
 		return $query->row;
 	} 
 	
-	public function getAllStatus($data) {
+	public function getAllStatus($data=array()) {
 		$sql = "SELECT * FROM " . DB_PREFIX . "manga_status";
-		
+
+        if(isset($data['order'])) {
+            if(strtolower($data['order']) === 'desc') {
+                $order = 'DESC';
+            }else{
+                $order = 'ASC';
+            }
+
+            $sql .= " ORDER BY sort_order " . $order;
+        }
+
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {
 				$data['start'] = 0;

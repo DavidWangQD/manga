@@ -72,14 +72,18 @@
                   <td><?php echo $entry_status; ?></td>
                   <td>
                       <select name="status">
-                          <?php if ($status) { ?>
-                          <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                          <option value="0"><?php echo $text_disabled; ?></option>
-                          <?php } else { ?>
-                          <option value="1"><?php echo $text_enabled; ?></option>
-                          <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                          <option value='none'> --- SELECT --- </option>
+                      <?php foreach($allStatus as $item) { ?>
+                          <?php if($item['manga_status_id'] == $status) { ?>
+                                <option value="<?php echo $item['manga_status_id']; ?>" selected="selected"><?php echo $item['value']; ?></option>
+                          <?php }else{ ?>
+                                <option value="<?php echo $item['manga_status_id']; ?>"><?php echo $item['value']; ?></option>
                           <?php } ?>
+                      <?php } ?>
                       </select>
+                      <?php if(isset($error_status)) { ?>
+                      <span class="error"><?php echo $error_status; ?></span>
+                      <?php } ?>
                   </td>
               </tr>
               <tr>

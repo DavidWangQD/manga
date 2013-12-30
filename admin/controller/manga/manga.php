@@ -254,6 +254,12 @@ class ControllerMangaManga extends Controller {
 			$this->data['error_name'] = '';
 		}
 
+        if (isset($this->error['status'])) {
+            $this->data['error_status'] = $this->error['status'];
+        } else {
+            $this->data['error_status'] = '';
+        }
+
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
@@ -362,6 +368,9 @@ class ControllerMangaManga extends Controller {
             $this->data['sort_order'] = 1;
         }
 
+        $this->load->model('manga/status');
+        $this->data['allStatus'] = $this->model_manga_status->getAllStatus();
+
         if (isset($this->request->post['status'])) {
             $this->data['status'] = $this->request->post['status'];
         } elseif (!empty($manga_info)) {
@@ -405,6 +414,10 @@ class ControllerMangaManga extends Controller {
 				$this->error['name'][$language_id] = $this->language->get('error_name');
 			}
 		}*/
+
+        if($this->request->post['status'] == 'none') {
+            $this->error['status'] = $this->language->get('error_status');
+        }
 
         if(utf8_strlen($this->request->post['title']) < 1 || utf8_strlen($this->request->post['title']) > 255) {
             $this->error['name'] = $this->language->get('error_name');
