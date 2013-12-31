@@ -80,7 +80,7 @@ class ModelMangaManga extends Model {
 		return $query->row;
 	} 
 	
-	public function getMangas($data) {
+	public function getMangas($data=array()) {
 		$sql = "SELECT m.manga_id, md.title, m.sort_order FROM " . DB_PREFIX . "manga AS m LEFT JOIN " . DB_PREFIX . "manga_description AS md ON m.manga_id = md.manga_id";
 		
 		if (isset($data['start']) || isset($data['limit'])) {
