@@ -1,6 +1,6 @@
 <?php
 class ModelMangaManga extends Model {
-	public function addCategory($data) {
+	public function addManga($data) {
 
         //insert to the table manga
         $this->db->query("INSERT INTO " . DB_PREFIX . "manga SET meta_description = '" . $this->db->escape($data['meta_description']) . "', meta_keyword = '" . $this->db->escape($data['meta_keyword']) . "', image = '" . $this->db->escape($data['image']). "', banner = '" . $this->db->escape($data['banner']) . "', sort_order = '" . $this->db->escape($data['sort_order']) . "', `status` = '" . $this->db->escape($data['status']) . "', `show` = '". $this->db->escape($data['show']) . "', date_added=NOW(), date_modified=NOW()");

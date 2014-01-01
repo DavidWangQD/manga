@@ -20,7 +20,7 @@ class ControllerMangaManga extends Controller {
 		$this->load->model('manga/manga');
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_manga_manga->addCategory($this->request->post);
+			$this->model_manga_manga->addManga($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
