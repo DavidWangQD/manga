@@ -1,6 +1,6 @@
 <?php
 class ModelMangaChapter extends Model {
-	public function addCategory($data) {
+	public function addChapter($data) {
         //insert to the table chapter
         $this->db->query("INSERT INTO " . DB_PREFIX . "chapter SET manga_id = '" . (int)$data['manga_id'] . "', meta_description = '" . $this->db->escape($data['meta_description']) . "', meta_keyword = '" . $this->db->escape($data['meta_keyword']) . "', num = '" . $this->db->escape($data['num']) . "', image = '" . $this->db->escape($data['image']) . "', `show` = '". $this->db->escape($data['show']) . "', date_added=NOW(), date_modified=NOW()");
 
@@ -72,12 +72,6 @@ class ModelMangaChapter extends Model {
 			$this->repairCategories($category['category_id']);
 		}
 	}
-
-	/*public function getManga($chapter_id) {
-		$query = $this->db->query("SELECT m.*, md.author, md.title, md.description, (SELECT keyword FROM " . DB_PREFIX . "url_alias WHERE query = 'manga_id=".$chapter_id."') AS keyword FROM " . DB_PREFIX . "manga AS m LEFT JOIN " . DB_PREFIX . "manga_description AS md ON m.manga_id = md.manga_id WHERE m.manga_id ='" . (int)$chapter_id . "' AND md.language_id = '" . (int)$this->config->get('config_language_id') . "'");
-
-		return $query->row;
-	}*/
 
     public function getChapterInfo($chapter_id) {
         $query = $this->db->query("SELECT c.*, cd.title, cd.description, (SELECT keyword FROM " . DB_PREFIX . "url_alias WHERE query = 'chapter_id=".$chapter_id."') AS keyword FROM " . DB_PREFIX . "chapter AS c LEFT JOIN " . DB_PREFIX . "chapter_description AS cd ON c.chapter_id = cd.chapter_id WHERE c.chapter_id ='" . (int)$chapter_id . "' AND cd.language_id = '" . (int)$this->config->get('config_language_id') . "'");

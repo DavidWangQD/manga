@@ -20,7 +20,7 @@ class ControllerMangaChapter extends Controller {
 		$this->load->model('manga/chapter');
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_manga_chapter->addCategory($this->request->post);
+			$this->model_manga_chapter->addChapter($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -297,7 +297,10 @@ class ControllerMangaChapter extends Controller {
 		}
 
         $this->load->model('manga/manga');
-        $this->data['mangas'] = $this->model_manga_manga->getMangas();
+        $params = array(
+            'order' =>  1,
+        );
+        $this->data['mangas'] = $this->model_manga_manga->getMangas($params);
 
         if (isset($this->request->post['manga_id'])) {
             $this->data['manga_id'] = $this->request->post['manga_id'];
