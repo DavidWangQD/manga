@@ -226,11 +226,11 @@ class ControllerMangaManga extends Controller {
 		$this->data['entry_meta_keyword'] = $this->language->get('entry_meta_keyword');
 		$this->data['entry_meta_description'] = $this->language->get('entry_meta_description');
 		$this->data['entry_description'] = $this->language->get('entry_description');
-
 		$this->data['entry_author'] = $this->language->get('entry_author');
         $this->data['entry_keyword'] = $this->language->get('entry_keyword');
         $this->data['entry_image'] = $this->language->get('entry_image');
         $this->data['entry_banner'] = $this->language->get('entry_banner');
+        $this->data['entry_genre'] = $this->language->get('entry_genre');
         $this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
         $this->data['entry_status'] = $this->language->get('entry_status');
         $this->data['entry_show'] = $this->language->get('entry_show');
@@ -288,10 +288,6 @@ class ControllerMangaManga extends Controller {
     	}
 
 		$this->data['token'] = $this->session->data['token'];
-		
-		$this->load->model('localisation/language');
-		
-		$this->data['languages'] = $this->model_localisation_language->getLanguages();
 
 		if (isset($this->request->post['title'])) {
 			$this->data['title'] = $this->request->post['title'];
@@ -376,6 +372,21 @@ class ControllerMangaManga extends Controller {
         }
 
         $this->data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
+
+        if (isset($this->request->post['manga_genre']) && isset($this->request->post['manga_genre_title'])) {
+
+            for($i=0;$i<count($this->request->post['manga_genre']);$i++) {
+                $this->data['manga_genre'][] = array(
+                    'genre_id'  =>  $this->request->post['manga_genre'][$i],
+                    'title'     =>  $this->request->post['manga_genre_title'][$i],
+                );
+            }
+
+        } elseif (isset($this->request->get['manga_id'])) {
+            $this->data['manga_genre'] = $this->model_manga_manga->getGenresByMangaID($this->request->get['manga_id']);
+        } else {
+            $this->data['manga_genre'] = array();
+        }
 
         if (isset($this->request->post['sort_order'])) {
             $this->data['sort_order'] = $this->request->post['sort_order'];

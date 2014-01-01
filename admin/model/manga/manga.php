@@ -7,6 +7,13 @@ class ModelMangaManga extends Model {
 
         $manga_id = $this->db->getLastId();
 
+        //update the table manga_to_genre
+        if(isset($this->request->post['manga_genre'])) {
+            foreach($this->request->post['manga_genre'] as $genreID) {
+                $this->db->query("INSERT INTO " . DB_PREFIX . "manga_to_genre SET manga_id = '" . (int)$manga_id . "', genre_id = '" . (int)$genreID . "'");
+            }
+        }
+
         //insert to the table manga_description
         if($manga_id) {
             $this->db->query("INSERT INTO " . DB_PREFIX . "manga_description SET manga_id = '" . (int)$manga_id . "', language_id = '" . (int)$this->config->get('config_language_id') . "', author = '" . $this->db->escape($data['author']) . "', title = '" . $this->db->escape($data['title']) . "', description = '" . $this->db->escape($data['description']) . "'");
@@ -26,6 +33,16 @@ class ModelMangaManga extends Model {
 
         //update the table manga_description
         $this->db->query("UPDATE " . DB_PREFIX . "manga_description SET author = '" . $this->db->escape($data['author']) . "', title = '" . $this->db->escape($data['title']) . "', description = '" . $this->db->escape($data['description']) . "' WHERE manga_id = '" . (int)$manga_id . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+
+        //delete the info about this manga_id in the table manga_to_genre
+        $this->db->query("DELETE FROM " . DB_PREFIX . "manga_to_genre WHERE manga_id = '" . (int)$manga_id . "'");
+
+        //update the table manga_to_genre
+        if(isset($this->request->post['manga_genre'])) {
+            foreach($this->request->post['manga_genre'] as $genreID) {
+                $this->db->query("INSERT INTO " . DB_PREFIX . "manga_to_genre SET manga_id = '" . (int)$manga_id . "', genre_id = '" . (int)$genreID . "'");
+            }
+        }
 
         //update seo_keyword
         $this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'manga_id=" . (int)$manga_id. "'");
@@ -109,7 +126,13 @@ class ModelMangaManga extends Model {
 		
 		return $query->rows;
 	}
-				
+
+    public function getGenresByMangaID($manga_id) {
+        $query = $this->db->query("SELECT mtg.genre_id, gd.title FROM " . DB_PREFIX . "manga_to_genre AS mtg LEFT JOIN " . DB_PREFIX . "genre_description AS gd ON mtg.genre_id = gd.genre_id WHERE manga_id = '" . $manga_id . "'");
+
+        return $query->rows;
+    }
+
 	public function getCategoryDescriptions($category_id) {
 		$category_description_data = array();
 		

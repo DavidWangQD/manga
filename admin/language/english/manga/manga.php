@@ -23,6 +23,7 @@ $_['entry_author']           = 'Author:';
 $_['entry_keyword']          = 'SEO Keyword:<br /><span class="help">Do not use spaces instead replace spaces with - and make sure the keyword is globally unique.</span>';
 $_['entry_image']            = 'Cover:';
 $_['entry_banner']           = 'Banner:';
+$_['entry_genre']            = 'Genres:<br /><span class="help">(Autocomplete)</span>';
 $_['entry_sort_order']       = 'Sort Order:';
 $_['entry_status']           = 'Status:';
 $_['entry_show']             = 'Show:';

@@ -20,7 +20,7 @@ class ModelMangaGenre extends Model {
     }
 	
 	public function editGenre($genre_id, $data) {
-        
+
         //update the table genre
 		$this->db->query("UPDATE " . DB_PREFIX . "genre SET meta_description = '" . $this->db->escape($data['meta_description']) . "', meta_keyword = '" . $this->db->escape($data['meta_keyword']) . "', image = '" . $this->db->escape($data['image']) . "', sort_order = '" . $this->db->escape($data['sort_order']) . "', `show` = '". $this->db->escape($data['show']) . "', date_modified=NOW() WHERE genre_id = '" . (int)$genre_id . "'");
 
@@ -81,7 +81,11 @@ class ModelMangaGenre extends Model {
 	} 
 	
 	public function getGenres($data=array()) {
-		$sql = "SELECT g.genre_id, gd.title, g.sort_order FROM " . DB_PREFIX . "genre AS g LEFT JOIN " . DB_PREFIX . "genre_description AS gd ON g.genre_id = gd.genre_id";
+		$sql = "SELECT g.genre_id, gd.title, g.sort_order FROM " . DB_PREFIX . "genre AS g LEFT JOIN " . DB_PREFIX . "genre_description AS gd ON g.genre_id = gd.genre_id WHERE gd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+
+        if (!empty($data['filter_name'])) {
+            $sql .= " AND gd.title LIKE '" . $this->db->escape($data['filter_name']) . "%'";
+        }
 
         if(isset($data['order'])) {
             if(strtolower($data['order']) === 'desc') {
@@ -180,6 +184,32 @@ class ModelMangaGenre extends Model {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "category_to_layout WHERE layout_id = '" . (int)$layout_id . "'");
 
 		return $query->row['total'];
-	}		
+	}
+
+    public function getCategories($data) {
+        $sql = "SELECT cp.category_id AS category_id, GROUP_CONCAT(cd1.name ORDER BY cp.level SEPARATOR ' &gt; ') AS name, c.parent_id, c.sort_order FROM " . DB_PREFIX . "category_path cp LEFT JOIN " . DB_PREFIX . "category c ON (cp.path_id = c.category_id) LEFT JOIN " . DB_PREFIX . "category_description cd1 ON (c.category_id = cd1.category_id) LEFT JOIN " . DB_PREFIX . "category_description cd2 ON (cp.category_id = cd2.category_id) WHERE cd1.language_id = '" . (int)$this->config->get('config_language_id') . "' AND cd2.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+
+        if (!empty($data['filter_name'])) {
+            $sql .= " AND cd2.name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
+        }
+
+        $sql .= " GROUP BY cp.category_id ORDER BY name";
+
+        if (isset($data['start']) || isset($data['limit'])) {
+            if ($data['start'] < 0) {
+                $data['start'] = 0;
+            }
+
+            if ($data['limit'] < 1) {
+                $data['limit'] = 20;
+            }
+
+            $sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+        }
+
+        $query = $this->db->query($sql);
+
+        return $query->rows;
+    }
 }
 ?>

@@ -57,6 +57,23 @@
                   </td>
               </tr>
               <tr>
+                  <td><?php echo $entry_genre; ?></td>
+                  <td><input type="text" name="genre" value="" /></td>
+              </tr>
+              <tr>
+                  <td>&nbsp;</td>
+                  <td><div id="manga-genre" class="scrollbox">
+                          <?php $class = 'odd'; ?>
+                          <?php foreach ($manga_genre as $item) { ?>
+                          <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
+                          <div id="manga-genre<?php echo $item['genre_id']; ?>" class="<?php echo $class; ?>"><?php echo $item['title']; ?><img src="view/image/delete.png" alt="" />
+                              <input type="hidden" name="manga_genre[]" value="<?php echo $item['genre_id']; ?>" />
+                              <input type="hidden" name="manga_genre_title[]" value="<?php echo $item['title']; ?>" />
+                          </div>
+                          <?php } ?>
+                      </div></td>
+              </tr>
+              <tr>
                   <td><?php echo $entry_status; ?></td>
                   <td>
                       <select name="status">
@@ -128,78 +145,47 @@ CKEDITOR.replace('description', {
 });
 //--></script> 
 <script type="text/javascript"><!--
-$('input[name=\'path\']').autocomplete({
-	delay: 500,
-	source: function(request, response) {		
-		$.ajax({
-			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
-			dataType: 'json',
-			success: function(json) {
-				json.unshift({
-					'category_id':  0,
-					'name':  '<?php echo $text_none; ?>'
-				});
-				
-				response($.map(json, function(item) {
-					return {
-						label: item.name,
-						value: item.category_id
-					}
-				}));
-			}
-		});
-	},
-	select: function(event, ui) {
-		$('input[name=\'path\']').val(ui.item.label);
-		$('input[name=\'parent_id\']').val(ui.item.value);
-		
-		return false;
-	},
-	focus: function(event, ui) {
-      	return false;
-   	}
-});
-//--></script> 
-<script type="text/javascript"><!--
-// Filter
-$('input[name=\'filter\']').autocomplete({
-	delay: 500,
-	source: function(request, response) {
-		$.ajax({
-			url: 'index.php?route=catalog/filter/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
-			dataType: 'json',
-			success: function(json) {		
-				response($.map(json, function(item) {
-					return {
-						label: item.name,
-						value: item.filter_id
-					}
-				}));
-			}
-		});
-	}, 
-	select: function(event, ui) {
-		$('#category-filter' + ui.item.value).remove();
-		
-		$('#category-filter').append('<div id="category-filter' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" alt="" /><input type="hidden" name="category_filter[]" value="' + ui.item.value + '" /></div>');
+    $('input[name=\'genre\']').autocomplete({
+        delay: 500,
+        source: function(request, response) {
+            $.ajax({
+                url: 'index.php?route=manga/genre/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
+                dataType: 'json',
+                success: function(json) {
 
-		$('#category-filter div:odd').attr('class', 'odd');
-		$('#category-filter div:even').attr('class', 'even');
-				
-		return false;
-	},
-	focus: function(event, ui) {
-      return false;
-   }
-});
+                    response($.map(json, function(item) {
+                        return {
+                            label: item.title,
+                            value: item.genre_id
+                        }
+                    }));
+                }
+            });
+        },
+        select: function(event, ui) {
+            $('#manga-genre' + ui.item.value).remove();
 
-$('#category-filter div img').live('click', function() {
-	$(this).parent().remove();
-	
-	$('#category-filter div:odd').attr('class', 'odd');
-	$('#category-filter div:even').attr('class', 'even');	
-});
-//--></script> 
+            $('#manga-genre').append('<div id="manga-genre' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" alt="" /><input type="hidden" name="manga_genre[]" value="' + ui.item.value + '" /><input type="hidden" name="manga_genre_title[]" value="' + ui.item.label + '" /></div>');
+
+            $('#manga-genre div:odd').attr('class', 'odd');
+            $('#manga-genre div:even').attr('class', 'even');
+
+            $('input[name=\'genre\']').val("");
+
+            return false;
+        },
+        focus: function(event, ui) {
+            return false;
+        }
+    });
+
+    $('#manga-genre div img').live('click', function() {
+        $(this).parent().remove();
+
+        $('#manga-genre div:odd').attr('class', 'odd');
+        $('#manga-genre div:even').attr('class', 'even');
+    });
+//--></script>
 <script type="text/javascript"><!--
 function image_upload(field, thumb) {
 	$('#dialog').remove();
@@ -226,9 +212,5 @@ function image_upload(field, thumb) {
 		modal: false
 	});
 };
-//--></script> 
-<script type="text/javascript"><!--
-$('#tabs a').tabs(); 
-$('#languages a').tabs();
-//--></script> 
+//--></script>
 <?php echo $footer; ?>
