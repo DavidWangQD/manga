@@ -17,16 +17,12 @@
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
           <table class="form">
               <tr>
-                  <td><span class="required">*</span> <?php echo $entry_name; ?></td>
+                  <td><span class="required">*</span> <?php echo $entry_title; ?></td>
                   <td><input type="text" name="title" size="100" value="<?php echo $title; ?>" />
-                      <?php if(isset($error_name)) { ?>
-                      <span class="error"><?php echo $error_name; ?></span>
+                      <?php if(isset($error_title)) { ?>
+                      <span class="error"><?php echo $error_title; ?></span>
                       <?php } ?>
                   </td>
-              </tr>
-              <tr>
-                  <td><?php echo $entry_author; ?></td>
-                  <td><input type="text" name="author" value="<?php echo $author; ?>" /></td>
               </tr>
               <tr>
                   <td><?php echo $entry_keyword; ?></td>
@@ -45,40 +41,10 @@
                   </td>
               </tr>
               <tr>
-                  <td><?php echo $entry_banner; ?></td>
-                  <td valign="top">
-                      <div class="image">
-                          <img src="<?php echo $bannerThumb; ?>" alt="" id="bannerThumb" />
-                          <input type="hidden" name="banner" value="<?php echo $banner; ?>" id="banner" />
-                          <br />
-                          <a onclick="image_upload('banner', 'bannerThumb');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;
-                          <a onclick="$('#bannerThumb').attr('src', '<?php echo $no_image; ?>'); $('#banner').attr('value', '');"><?php echo $text_clear; ?></a>
-                      </div>
-                  </td>
-              </tr>
-              <tr>
-                  <td><?php echo $entry_status; ?></td>
-                  <td>
-                      <select name="status">
-                          <option value='none'> --- SELECT --- </option>
-                          <?php foreach($allStatus as $item) { ?>
-                          <?php if($item['manga_status_id'] == $status) { ?>
-                          <option value="<?php echo $item['manga_status_id']; ?>" selected="selected"><?php echo $item['value']; ?></option>
-                          <?php }else{ ?>
-                          <option value="<?php echo $item['manga_status_id']; ?>"><?php echo $item['value']; ?></option>
-                          <?php } ?>
-                          <?php } ?>
-                      </select>
-                      <?php if(isset($error_status)) { ?>
-                      <span class="error"><?php echo $error_status; ?></span>
-                      <?php } ?>
-                  </td>
-              </tr>
-              <tr>
                   <td><?php echo $entry_show; ?></td>
                   <td>
                       <select name="show">
-                          <?php if ($status) { ?>
+                          <?php if ($show) { ?>
                           <option value="1" selected="selected"><?php echo $text_yes; ?></option>
                           <option value="0"><?php echo $text_no; ?></option>
                           <?php } else { ?>

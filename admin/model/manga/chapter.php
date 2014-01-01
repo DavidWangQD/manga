@@ -21,7 +21,7 @@ class ModelMangaChapter extends Model {
 	public function editChapter($chapter_id, $data) {
 
         //update the table chapter
-		$this->db->query("UPDATE " . DB_PREFIX . "chapter SET manga_id = '" . (int)$data['manga_id'] . "', meta_description = '" . $this->db->escape($data['meta_description']) . "', meta_keyword = '" . $this->db->escape($data['meta_keyword']) . "', num = '" . $this->db->escape($data['num']) . "', image = '" . $this->db->escape($data['image']) . "', `show` = '". $this->db->escape($data['show']) . "' WHERE chapter_id = '" . (int)$chapter_id . "'");
+		$this->db->query("UPDATE " . DB_PREFIX . "chapter SET manga_id = '" . (int)$data['manga_id'] . "', meta_description = '" . $this->db->escape($data['meta_description']) . "', meta_keyword = '" . $this->db->escape($data['meta_keyword']) . "', num = '" . $this->db->escape($data['num']) . "', image = '" . $this->db->escape($data['image']) . "', `show` = '". $this->db->escape($data['show']) . "', date_modified=NOW() WHERE chapter_id = '" . (int)$chapter_id . "'");
 
         //update the table chapter_description
         $this->db->query("UPDATE " . DB_PREFIX . "chapter_description SET title = '" . $this->db->escape($data['title']) . "', description = '" . $this->db->escape($data['description']) . "' WHERE chapter_id = '" . (int)$chapter_id . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");

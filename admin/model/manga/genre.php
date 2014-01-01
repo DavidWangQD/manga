@@ -1,51 +1,51 @@
 <?php
-class ModelMangaManga extends Model {
-	public function addCategory($data) {
+class ModelMangaGenre extends Model {
+	public function addGenre($data) {
 
-        //insert to the table manga
-        $this->db->query("INSERT INTO " . DB_PREFIX . "manga SET meta_description = '" . $this->db->escape($data['meta_description']) . "', meta_keyword = '" . $this->db->escape($data['meta_keyword']) . "', image = '" . $this->db->escape($data['image']). "', banner = '" . $this->db->escape($data['banner']) . "', sort_order = '" . $this->db->escape($data['sort_order']) . "', `status` = '" . $this->db->escape($data['status']) . "', `show` = '". $this->db->escape($data['show']) . "', date_added=NOW(), date_modified=NOW()");
+        //insert to the table genre
+        $this->db->query("INSERT INTO " . DB_PREFIX . "genre SET meta_description = '" . $this->db->escape($data['meta_description']) . "', meta_keyword = '" . $this->db->escape($data['meta_keyword']) . "', image = '" . $this->db->escape($data['image']) . "', sort_order = '" . $this->db->escape($data['sort_order']) . "', `show` = '". $this->db->escape($data['show']) . "', date_added=NOW(), date_modified=NOW()");
 
-        $manga_id = $this->db->getLastId();
+        $genre_id = $this->db->getLastId();
 
-        //insert to the table manga_description
-        if($manga_id) {
-            $this->db->query("INSERT INTO " . DB_PREFIX . "manga_description SET manga_id = '" . (int)$manga_id . "', language_id = '" . (int)$this->config->get('config_language_id') . "', author = '" . $this->db->escape($data['author']) . "', title = '" . $this->db->escape($data['title']) . "', description = '" . $this->db->escape($data['description']) . "'");
+        //insert to the table genre_description
+        if($genre_id) {
+            $this->db->query("INSERT INTO " . DB_PREFIX . "genre_description SET genre_id = '" . (int)$genre_id . "', language_id = '" . (int)$this->config->get('config_language_id') . "', title = '" . $this->db->escape($data['title']) . "', description = '" . $this->db->escape($data['description']) . "'");
         }
 
         //insert into the table seo_keyword
         if ($data['keyword']) {
-            $this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'manga_id=" . (int)$manga_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
+            $this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'genre_id=" . (int)$genre_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
         }
 
     }
 	
-	public function editManga($manga_id, $data) {
+	public function editGenre($genre_id, $data) {
+        
+        //update the table genre
+		$this->db->query("UPDATE " . DB_PREFIX . "genre SET meta_description = '" . $this->db->escape($data['meta_description']) . "', meta_keyword = '" . $this->db->escape($data['meta_keyword']) . "', image = '" . $this->db->escape($data['image']) . "', sort_order = '" . $this->db->escape($data['sort_order']) . "', `show` = '". $this->db->escape($data['show']) . "', date_modified=NOW() WHERE genre_id = '" . (int)$genre_id . "'");
 
-        //update the table managa
-		$this->db->query("UPDATE " . DB_PREFIX . "manga SET meta_description = '" . $this->db->escape($data['meta_description']) . "', meta_keyword = '" . $this->db->escape($data['meta_keyword']) . "', image = '" . $this->db->escape($data['image']) . "', banner = '" . $this->db->escape($data['banner']) . "', sort_order = '" . $this->db->escape($data['sort_order']) . "', `status` = '" . $this->db->escape($data['status']) . "', `show` = '". $this->db->escape($data['show']) . "', date_modified=NOW() WHERE manga_id = '" . (int)$manga_id . "'");
-
-        //update the table manga_description
-        $this->db->query("UPDATE " . DB_PREFIX . "manga_description SET author = '" . $this->db->escape($data['author']) . "', title = '" . $this->db->escape($data['title']) . "', description = '" . $this->db->escape($data['description']) . "' WHERE manga_id = '" . (int)$manga_id . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+        //update the table genre_description
+        $this->db->query("UPDATE " . DB_PREFIX . "genre_description SET title = '" . $this->db->escape($data['title']) . "', description = '" . $this->db->escape($data['description']) . "' WHERE genre_id = '" . (int)$genre_id . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
         //update seo_keyword
-        $this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'manga_id=" . (int)$manga_id. "'");
+        $this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'genre_id=" . (int)$genre_id. "'");
 
         if ($data['keyword']) {
-            $this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'manga_id=" . (int)$manga_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
+            $this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'genre_id=" . (int)$genre_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
         }
 
     }
 	
-	public function deleteManga($manga_id) {
+	public function deleteGenre($genre_id) {
 
-        //delete from the table manga
-		$this->db->query("DELETE FROM " . DB_PREFIX . "manga WHERE manga_id = '" . $manga_id . "'");
+        //delete from the table genre
+		$this->db->query("DELETE FROM " . DB_PREFIX . "genre WHERE genre_id = '" . $genre_id . "'");
 
-        //delete from the table manga_description
-        $this->db->query("DELETE FROM " . DB_PREFIX . "manga_description WHERE manga_id = '" . $manga_id . "'");
+        //delete from the table genre_description
+        $this->db->query("DELETE FROM " . DB_PREFIX . "genre_description WHERE genre_id = '" . $genre_id . "'");
 
         //delete from the table dc_url_alias
-        $this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'manga_id=" . $manga_id . "'");
+        $this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'genre_id=" . $genre_id . "'");
 
     }
 	
@@ -74,14 +74,14 @@ class ModelMangaManga extends Model {
 		}
 	}
 			
-	public function getManga($manga_id) {
-		$query = $this->db->query("SELECT m.*, md.author, md.title, md.description, (SELECT keyword FROM " . DB_PREFIX . "url_alias WHERE query = 'manga_id=".$manga_id."') AS keyword FROM " . DB_PREFIX . "manga AS m LEFT JOIN " . DB_PREFIX . "manga_description AS md ON m.manga_id = md.manga_id WHERE m.manga_id ='" . (int)$manga_id . "' AND md.language_id = '" . (int)$this->config->get('config_language_id') . "'");
+	public function getGenre($genre_id) {
+		$query = $this->db->query("SELECT g.*, gd.title, gd.description, (SELECT keyword FROM " . DB_PREFIX . "url_alias WHERE query = 'genre_id=".$genre_id."') AS keyword FROM " . DB_PREFIX . "genre AS g LEFT JOIN " . DB_PREFIX . "genre_description AS gd ON g.genre_id = gd.genre_id WHERE g.genre_id ='" . (int)$genre_id . "' AND gd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
 	} 
 	
-	public function getMangas($data=array()) {
-		$sql = "SELECT m.manga_id, md.title, m.sort_order FROM " . DB_PREFIX . "manga AS m LEFT JOIN " . DB_PREFIX . "manga_description AS md ON m.manga_id = md.manga_id";
+	public function getGenres($data=array()) {
+		$sql = "SELECT g.genre_id, gd.title, g.sort_order FROM " . DB_PREFIX . "genre AS g LEFT JOIN " . DB_PREFIX . "genre_description AS gd ON g.genre_id = gd.genre_id";
 
         if(isset($data['order'])) {
             if(strtolower($data['order']) === 'desc') {
@@ -164,8 +164,8 @@ class ModelMangaManga extends Model {
 		return $category_layout_data;
 	}
 		
-	public function getTotalMangas() {
-      	$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "manga");
+	public function getTotalGenres() {
+      	$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "genre");
 		
 		return $query->row['total'];
 	}	

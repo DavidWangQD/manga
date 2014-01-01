@@ -169,6 +169,7 @@ $(document).ready(function(){
       </li>
       <li id="manga"><a class="top"><?php echo $text_manga; ?></a>
           <ul>
+              <li><a href="<?php echo $genre; ?>"><?php echo $text_genre; ?></a></li>
               <li><a href="<?php echo $manga; ?>"><?php echo $text_manga; ?></a></li>
               <li><a href="<?php echo $chapter; ?>"><?php echo $text_chapter; ?></a></li>
               <li><a href="<?php echo $manga_status; ?>"><?php echo $text_manga_status; ?></a></li>

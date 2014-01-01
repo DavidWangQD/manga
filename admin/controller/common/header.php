@@ -55,6 +55,7 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_localisation'] = $this->language->get('text_localisation');
 		$this->data['text_logout'] = $this->language->get('text_logout');
 		$this->data['text_contact'] = $this->language->get('text_contact');
+		$this->data['text_genre'] = $this->language->get('text_genre');
 		$this->data['text_manga'] = $this->language->get('text_manga');
 		$this->data['text_chapter'] = $this->language->get('text_chapter');
 		$this->data['text_manga_status'] = $this->language->get('text_manga_status');
@@ -156,6 +157,7 @@ class ControllerCommonHeader extends Controller {
 			$this->data['layout'] = $this->url->link('design/layout', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['logout'] = $this->url->link('common/logout', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['contact'] = $this->url->link('sale/contact', 'token=' . $this->session->data['token'], 'SSL');
+			$this->data['genre'] = $this->url->link('manga/genre', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['manga'] = $this->url->link('manga/manga', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['chapter'] = $this->url->link('manga/chapter', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['manga_status'] = $this->url->link('manga/status', 'token=' . $this->session->data['token'], 'SSL');
