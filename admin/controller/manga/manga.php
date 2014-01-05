@@ -466,6 +466,12 @@ class ControllerMangaManga extends Controller {
 		if (!$this->user->hasPermission('modify', 'manga/manga')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
+
+        $result = $this->model_manga_manga->validateDeleteManga($this->request->post['selected']);
+
+        if(!$result) {
+            $this->error['warning'] = $this->language->get('error_manga_working');
+        }
  
 		if (!$this->error) {
 			return true; 

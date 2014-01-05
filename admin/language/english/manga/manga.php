@@ -33,6 +33,7 @@ $_['entry_viewed']           = 'Viewed:';
 // Error 
 $_['error_warning']          = 'Warning: Please check the form carefully for errors!';
 $_['error_permission']       = 'Warning: You do not have permission to modify mangas!';
+$_['error_manga_working']    = 'Warning: Some Mangas in the selected is working now!';
 $_['error_name']             = 'Title must be between 1 and 255 characters!';
 $_['error_status']           = 'The status is invalid!';
 ?>

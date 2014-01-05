@@ -27,7 +27,7 @@ class ModelMangaStatus extends Model {
 
         $scope = $this->db->scope($manga_status_ids);
 
-        $result = $this->db->query("SELECT * FROM " . DB_PREFIX . "manga_to_genre WHERE genre_id IN ".$scope." LIMIT 1");
+        $result = $this->db->query("SELECT * FROM " . DB_PREFIX . "manga WHERE status IN ".$scope." LIMIT 1");
 
         if($result->row) {
             $flag = false;

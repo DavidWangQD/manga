@@ -69,7 +69,7 @@ class ControllerMangaStatus extends Controller {
 		
 		if (isset($this->request->post['selected']) && $this->validateDelete()) {
 			foreach ($this->request->post['selected'] as $manga_status_id) {
-				//$this->model_manga_status->deleteStatus($manga_status_id);
+				$this->model_manga_status->deleteStatus($manga_status_id);
 			}
 
 			$this->session->data['success'] = $this->language->get('text_success');
