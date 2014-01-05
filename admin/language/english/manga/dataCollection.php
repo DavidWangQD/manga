@@ -24,6 +24,7 @@ $_['entry_chapter_variable']      = 'Chapter Variable:';
 $_['entry_chapter_range']         = 'Chapter Range:';
 $_['entry_page_variable']         = 'Page Variadble:';
 $_['entry_page_range']            = 'Page Range:';
+$_['entry_replace']               = 'Replace:<br/><span class="help">If replace the existed files or not.</span>';
 $_['entry_progress']              = 'Progress:';
 
 // Error 

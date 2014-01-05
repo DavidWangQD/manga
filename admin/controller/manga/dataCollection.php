@@ -220,8 +220,9 @@ class ControllerMangaDataCollection extends Controller {
 		$this->data['entry_chapter_range'] = $this->language->get('entry_chapter_range');
         $this->data['entry_page_variable'] = $this->language->get('entry_page_variable');
         $this->data['entry_page_range'] = $this->language->get('entry_page_range');
+        $this->data['entry_replace'] = $this->language->get('entry_replace');
         $this->data['entry_progress'] = $this->language->get('entry_progress');
-		
+
 		$this->data['button_start'] = $this->language->get('button_start');
 
   		$this->data['breadcrumbs'] = array();
@@ -268,6 +269,13 @@ class ControllerMangaDataCollection extends Controller {
         $pageVariable = $this->request->post['page_variable'];
         $pageStart = $this->request->post['page_start'];
         $pageEnd = $this->request->post['page_end'];
+        $replace = $this->request->post['replace'];
+
+        /*$file_exists = file_exists(DIR_IMAGE."data/$manga/$currentChapter");
+
+        if($replace == '1' && $file_exists) {
+            //remove the folder
+        }*/
 
         if(!file_exists(DIR_IMAGE."data/$manga/$currentChapter")) {
 
@@ -405,6 +413,27 @@ class ControllerMangaDataCollection extends Controller {
 		array_multisort($sort_order, SORT_ASC, $json);
 
 		$this->response->setOutput(json_encode($json));
-	}		
+    }
+
+    public function deleteDir($dirPath) {
+
+        if(is_dir($dirPath)) {
+
+            if (substr($dirPath, strlen($dirPath) - 1, 1) != '/') {
+                $dirPath .= '/';
+            }
+            $files = glob($dirPath . '*', GLOB_MARK);
+            foreach ($files as $file) {
+                if (is_dir($file)) {
+                    $this->deleteDir($file);
+                } else {
+                    unlink($file);
+                }
+            }
+            rmdir($dirPath);
+
+        }
+
+    }
 }
 ?>

@@ -86,7 +86,16 @@
                   <td><?php echo $entry_page_range; ?></td>
                   <td>
                       <input type="text" name="page_start" value="0" />&nbsp;&nbsp;<b>to</b>&nbsp;&nbsp;
-                      <input type="text" name="page_end" value="20" />
+                      <input type="text" name="page_end" value="25" />
+                  </td>
+              </tr>
+              <tr>
+                  <td><?php echo $entry_replace; ?></td>
+                  <td>
+                    <input type='radio' id='replace_yes' name='replace' value='1' />
+                    <label for="replace_yes">Yes</label>
+                    <input type='radio' id='replace_no' name='replace' value='0' checked='checked' />
+                    <label for="replace_no">No</label>
                   </td>
               </tr>
               <tr>
@@ -101,7 +110,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-    var urlSample = $("input[name='urlSample']").val();
+    var urlSample = '';
     var currentChapter = '';
     var firstChapter = '';
     var lastChapter = '';
@@ -169,12 +178,12 @@
     function initialCollect() {
 
         $(".warning").hide('slow');
-        $( "#progressbar" ).progressbar( "value", 0 );
+        $( ".progress-label" ).text( "0%" );
 
         if(!validate()) {
             return;
         }
-
+        urlSample = $("input[name='urlSample']").val();
         currentChapter = $("input[name='chapter_start']").val();
         firstChapter = $("input[name='chapter_start']").val();
         lastChapter = $("input[name='chapter_end']").val();
@@ -197,7 +206,8 @@
             currentChapter:currentChapter,
             page_variable:$("input[name='page_variable']").val(),
             page_start:$("input[name='page_start']").val(),
-            page_end:$("input[name='page_end']").val()
+            page_end:$("input[name='page_end']").val(),
+            replace:$("input[name='replace']:checked").val()
         }
 
         $.ajax({
