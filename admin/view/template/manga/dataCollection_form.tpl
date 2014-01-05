@@ -190,6 +190,7 @@
         totalChapters = lastChapter - firstChapter + 1;
         completedChapters = 1;
         collect();
+
     }
 
     function collect() {

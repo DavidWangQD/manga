@@ -271,11 +271,11 @@ class ControllerMangaDataCollection extends Controller {
         $pageEnd = $this->request->post['page_end'];
         $replace = $this->request->post['replace'];
 
-        /*$file_exists = file_exists(DIR_IMAGE."data/$manga/$currentChapter");
+        $directory = DIR_IMAGE."data/$manga/$currentChapter";
 
-        if($replace == '1' && $file_exists) {
-            //remove the folder
-        }*/
+        if($replace == '1') {
+            $this->deleteDir($directory);
+        }
 
         if(!file_exists(DIR_IMAGE."data/$manga/$currentChapter")) {
 
@@ -300,10 +300,10 @@ class ControllerMangaDataCollection extends Controller {
                     $image  = file_get_contents($macthingImg[0]);
 
                     if(!file_exists(DIR_IMAGE."data/$manga/$currentChapter")) {
-                        @mkdir(DIR_IMAGE."data/$manga/$currentChapter",0777,true);
+                        @mkdir($directory,0777,true);
                     }
 
-                    file_put_contents(DIR_IMAGE."data/$manga/$currentChapter/$i.$extension",$image);
+                    file_put_contents("$directory/$i.$extension",$image);
                 }else{
                     break;
                 }
