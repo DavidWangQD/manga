@@ -27,7 +27,7 @@ require_once(DIR_SYSTEM . 'library/tax.php');
 require_once(DIR_SYSTEM . 'library/weight.php');
 require_once(DIR_SYSTEM . 'library/length.php');
 require_once(DIR_SYSTEM . 'library/cart.php');
-
+require_once(DIR_SYSTEM . 'library/less/lessc.inc.php');
 // Registry
 $registry = new Registry();
 
@@ -214,6 +214,8 @@ $registry->set('length', new Length($registry));
 // Cart
 $registry->set('cart', new Cart($registry));
 
+
+
 //OpenBay Pro
 $registry->set('openbay', new Openbay($registry));
 $registry->set('play', new Play($registry));
@@ -231,8 +233,11 @@ $controller = new Front($registry);
 $controller->addPreAction(new Action('common/maintenance'));
 
 // SEO URL's
-$controller->addPreAction(new Action('common/seo_url'));	
-	
+$controller->addPreAction(new Action('common/seo_url'));
+
+//less
+$controller->addPreAction(new Action('common/less'));
+
 // Router
 if (isset($request->get['route'])) {
 	$action = new Action($request->get['route']);
