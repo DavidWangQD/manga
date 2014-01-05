@@ -69,7 +69,7 @@ class ControllerMangaStatus extends Controller {
 		
 		if (isset($this->request->post['selected']) && $this->validateDelete()) {
 			foreach ($this->request->post['selected'] as $manga_status_id) {
-				$this->model_manga_status->deleteStatus($manga_status_id);
+				//$this->model_manga_status->deleteStatus($manga_status_id);
 			}
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -326,6 +326,12 @@ class ControllerMangaStatus extends Controller {
 		if (!$this->user->hasPermission('modify', 'manga/status')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
+
+        $result = $this->model_manga_status->validateDeleteStatus($this->request->post['selected']);
+
+        if(!$result) {
+            $this->error['warning'] = $this->language->get('error_status_working');
+        }
  
 		if (!$this->error) {
 			return true; 

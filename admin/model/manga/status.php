@@ -20,6 +20,22 @@ class ModelMangaStatus extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "manga_status WHERE manga_status_id = '" . $manga_status_id . "'");
 
     }
+
+    public function validateDeleteStatus($manga_status_ids) {
+
+        $flag = true;
+
+        $scope = $this->db->scope($manga_status_ids);
+
+        $result = $this->db->query("SELECT * FROM " . DB_PREFIX . "manga_to_genre WHERE genre_id IN ".$scope." LIMIT 1");
+
+        if($result->row) {
+            $flag = false;
+        }
+
+        return $flag;
+
+    }
 	
 	// Function to repair any erroneous categories that are not in the category path table.
 	public function repairCategories($parent_id = 0) {

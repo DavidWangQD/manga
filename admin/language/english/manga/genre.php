@@ -29,6 +29,7 @@ $_['entry_viewed']           = 'Viewed:';
 // Error 
 $_['error_warning']          = 'Warning: Please check the form carefully for errors!';
 $_['error_permission']       = 'Warning: You do not have permission to modify genres!';
+$_['error_genre_working']    = 'Warning: Some Genres in the selected is working now!';
 $_['error_name']             = 'Title must be between 1 and 255 characters!';
 $_['error_status']           = 'The status is invalid!';
 ?>

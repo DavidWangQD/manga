@@ -48,6 +48,22 @@ class ModelMangaGenre extends Model {
         $this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'genre_id=" . $genre_id . "'");
 
     }
+
+    public function validateDeleteGenre($genre_ids) {
+
+        $flag = true;
+
+        $scope = $this->db->scope($genre_ids);
+
+        $result = $this->db->query("SELECT * FROM " . DB_PREFIX . "manga_to_genre WHERE genre_id IN ".$scope." LIMIT 1");
+
+        if($result->row) {
+            $flag = false;
+        }
+
+        return $flag;
+
+    }
 	
 	// Function to repair any erroneous categories that are not in the category path table.
 	public function repairCategories($parent_id = 0) {

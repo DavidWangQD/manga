@@ -26,6 +26,19 @@ class DB {
 
   	public function getLastId() {
 		return $this->driver->getLastId();
-  	}	
+    }
+
+    public function scope($ids = array()) {
+
+        $scope = "(";
+        foreach($ids as $id) {
+            $scope .= $id . ', ';
+        }
+        $scope = rtrim($scope,', ');
+        $scope .= ")";
+
+        return $scope;
+
+    }
 }
 ?>

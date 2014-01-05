@@ -21,5 +21,6 @@ $_['entry_sort_order']       = 'Sort Order:';
 // Error 
 $_['error_warning']          = 'Warning: Please check the form carefully for errors!';
 $_['error_permission']       = 'Warning: You do not have permission to modify mangas!';
-$_['error_name']            = 'The name must be between 1 and 255 characters!';
+$_['error_status_working']   = 'Warning: Some Status in the selected is working now!';
+$_['error_name']             = 'The name must be between 1 and 255 characters!';
 ?>

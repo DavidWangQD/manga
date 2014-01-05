@@ -66,7 +66,7 @@ class ControllerMangaGenre extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('manga/genre');
-		
+
 		if (isset($this->request->post['selected']) && $this->validateDelete()) {
 			foreach ($this->request->post['selected'] as $genre_id) {
 				$this->model_manga_genre->deleteGenre($genre_id);
@@ -402,7 +402,13 @@ class ControllerMangaGenre extends Controller {
 		if (!$this->user->hasPermission('modify', 'manga/genre')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
- 
+
+        $result = $this->model_manga_genre->validateDeleteGenre($this->request->post['selected']);
+
+        if(!$result) {
+            $this->error['warning'] = $this->language->get('error_genre_working');
+        }
+
 		if (!$this->error) {
 			return true; 
 		} else {
