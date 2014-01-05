@@ -35,6 +35,7 @@ $_['text_localisation']                = 'Localisation';
 $_['text_logged']                      = 'You are logged in as <span>%s</span>';
 $_['text_logout']                      = 'Logout';
 $_['text_contact']                     = 'Mail';
+$_['text_dataCollection']              = 'Data Collection';
 $_['text_genre']                       = 'Genre';
 $_['text_manga']                       = 'Manga';
 $_['text_chapter']                     = 'Chapter';

@@ -298,7 +298,7 @@ class ControllerMangaChapter extends Controller {
 
         $this->load->model('manga/manga');
         $params = array(
-            'order' =>  1,
+            'order' =>  'ASC',
         );
         $this->data['mangas'] = $this->model_manga_manga->getMangas($params);
 

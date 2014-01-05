@@ -33,6 +33,7 @@ $_['text_home']                     = 'Home';
 $_['button_insert']                 = 'Insert';
 $_['button_delete']                 = 'Delete';
 $_['button_save']                   = 'Save';
+$_['button_start']                  = 'Start';
 $_['button_cancel']                 = 'Cancel';
 $_['button_clear']                  = 'Clear Log';
 $_['button_close']                  = 'Close';
