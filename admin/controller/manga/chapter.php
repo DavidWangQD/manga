@@ -66,10 +66,22 @@ class ControllerMangaChapter extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('manga/chapter');
+        $this->load->model('tool/directory');
 
 		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $chapter_id) {
-				$this->model_manga_chapter->deleteChapter($chapter_id);
+
+			foreach ($this->request->post['selected'] as $chapter_info) {
+                $chapter_info = explode("#",$chapter_info);
+				$this->model_manga_chapter->deleteChapter($chapter_info[0]);
+
+                if($this->request->post['delWithFiles']) {
+                    $chapter_info = explode("-",$chapter_info[1]);
+                    if(!empty($chapter_info[0]) && !empty($chapter_info[1])) {
+                        $chapter_path = DIR_IMAGE .'data/'. $chapter_info[0] . '/' . $chapter_info[1];
+                        $this->model_tool_directory->deleteDir($chapter_path);
+                    }
+                }
+
 			}
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -138,8 +150,10 @@ class ControllerMangaChapter extends Controller {
 		$this->data['categories'] = array();
 		
 		$data = array(
+            'sort'  => 'cd.title',
+            'order' =>  'ASC',
 			'start' => ($page - 1) * $this->config->get('config_admin_limit'),
-			'limit' => $this->config->get('config_admin_limit')
+			'limit' => $this->config->get('config_admin_limit'),
 		);
 				
 		$chapter_total = $this->model_manga_chapter->getTotalChapters();

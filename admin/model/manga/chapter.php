@@ -82,7 +82,25 @@ class ModelMangaChapter extends Model {
 	public function getChapters($data) {
 
 		$sql = "SELECT c.chapter_id, cd.title, c.num FROM " . DB_PREFIX . "chapter AS c LEFT JOIN " . DB_PREFIX . "chapter_description AS cd ON c.chapter_id = cd.chapter_id";
-		
+
+        $sort_data = array(
+            'c.chapter_id',
+            'cd.title',
+            'c.num'
+        );
+
+        if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+            $sql .= " ORDER BY " . $data['sort'];
+        } else {
+            $sql .= " ORDER BY c.chapter_id";
+        }
+
+        if (isset($data['order']) && ($data['order'] == 'DESC')) {
+            $sql .= " DESC";
+        } else {
+            $sql .= " ASC";
+        }
+
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {
 				$data['start'] = 0;
@@ -94,7 +112,7 @@ class ModelMangaChapter extends Model {
 		 
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
-						
+
 		$query = $this->db->query($sql);
 		
 		return $query->rows;

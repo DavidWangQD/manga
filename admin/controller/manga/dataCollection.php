@@ -257,6 +257,8 @@ class ControllerMangaDataCollection extends Controller {
 
         set_time_limit(0);
 
+        $this->load->model('tool/directory');
+
         $url = $this->request->post['url'];
         $manga = $this->request->post['manga'];
         $lastImage = "";
@@ -274,7 +276,7 @@ class ControllerMangaDataCollection extends Controller {
         $directory = DIR_IMAGE."data/$manga/$currentChapter";
 
         if($replace == '1') {
-            $this->deleteDir($directory);
+            $this->model_tool_directory->deleteDir($directory);
         }
 
         if(!file_exists(DIR_IMAGE."data/$manga/$currentChapter")) {
@@ -415,25 +417,5 @@ class ControllerMangaDataCollection extends Controller {
 		$this->response->setOutput(json_encode($json));
     }
 
-    public function deleteDir($dirPath) {
-
-        if(is_dir($dirPath)) {
-
-            if (substr($dirPath, strlen($dirPath) - 1, 1) != '/') {
-                $dirPath .= '/';
-            }
-            $files = glob($dirPath . '*', GLOB_MARK);
-            foreach ($files as $file) {
-                if (is_dir($file)) {
-                    $this->deleteDir($file);
-                } else {
-                    unlink($file);
-                }
-            }
-            rmdir($dirPath);
-
-        }
-
-    }
 }
 ?>

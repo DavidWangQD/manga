@@ -17,11 +17,12 @@
       <div class="buttons">
           <!--<a href="<?php echo $repair; ?>" class="button"><?php echo $button_repair; ?></a>-->
           <a href="<?php echo $insert; ?>" class="button"><?php echo $button_insert; ?></a>
-          <a onclick="$('#form').submit();" class="button"><?php echo $button_delete; ?></a>
+          <a onclick="$('#form').submit();" class="button"><?php echo $button_delete; ?></a>&nbsp;<b>[ <input type='checkbox' id='delWithFiles' /> <label for='delWithFiles'>with Files</label> ]</b>
       </div>
     </div>
     <div class="content">
       <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form">
+        <input type='hidden' name='delWithFiles' value='0' />
         <table class="list">
           <thead>
             <tr>
@@ -36,9 +37,9 @@
             <?php foreach ($chapters as $chapter) { ?>
             <tr>
               <td style="text-align: center;"><?php if ($chapter['selected']) { ?>
-                <input type="checkbox" name="selected[]" value="<?php echo $chapter['chapter_id']; ?>" checked="checked" />
+                <input type="checkbox" name="selected[]" value="<?php echo $chapter['chapter_id'].'#'.$chapter['title']; ?>" checked="checked" />
                 <?php } else { ?>
-                <input type="checkbox" name="selected[]" value="<?php echo $chapter['chapter_id']; ?>" />
+                <input type="checkbox" name="selected[]" value="<?php echo $chapter['chapter_id'].'#'.$chapter['title']; ?>" />
                 <?php } ?></td>
               <td class="left"><?php echo $chapter['title']; ?></td>
               <td class="right"><?php echo $chapter['num']; ?></td>
@@ -60,3 +61,15 @@
   </div>
 </div>
 <?php echo $footer; ?>
+
+<script>
+    $(function(){
+       $("#delWithFiles").click(function(){
+           if($(this).attr("checked")) {
+               $("input[name='delWithFiles']").val('1');
+           }else{
+               $("input[name='delWithFiles']").val('0');
+           }
+       });
+    });
+</script>
