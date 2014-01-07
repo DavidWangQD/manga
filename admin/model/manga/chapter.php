@@ -83,6 +83,16 @@ class ModelMangaChapter extends Model {
 
 		$sql = "SELECT c.chapter_id, cd.title, c.num FROM " . DB_PREFIX . "chapter AS c LEFT JOIN " . DB_PREFIX . "chapter_description AS cd ON c.chapter_id = cd.chapter_id";
 
+        $sql .= " WHERE cd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+
+        if (!empty($data['filter_title'])) {
+            $sql .= " AND cd.title LIKE '" . $this->db->escape($data['filter_title']) . "%'";
+        }
+
+        if (!empty($data['filter_num'])) {
+            $sql .= " AND c.num LIKE '" . $this->db->escape($data['filter_num']) . "%'";
+        }
+
         $sort_data = array(
             'c.chapter_id',
             'cd.title',

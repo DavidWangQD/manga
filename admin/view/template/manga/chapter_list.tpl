@@ -27,12 +27,21 @@
           <thead>
             <tr>
               <td width="1" style="text-align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
-              <td class="left"><?php echo $column_title; ?></td>
-              <td class="right"><?php echo $column_num; ?></td>
-              <td class="right"><?php echo $column_action; ?></td>
+              <td class="left" style="width:40%"><?php echo $column_title; ?></td>
+              <td class="left" style="width:30%"><?php echo $column_num; ?></td>
+              <td class="right" style="width:30%"><?php echo $column_action; ?></td>
             </tr>
           </thead>
           <tbody>
+            <tr class="filter">
+                <td></td>
+                <td><input type="text" name="filter_title" value="<?php echo $filter_title; ?>" /></td>
+                <td><input type="text" name="filter_num" value="<?php echo $filter_num; ?>" /></td>
+                <td align="right">
+                    <a onclick="filter();" class="button"><?php echo $button_filter; ?></a>
+                    <a href="<?php echo $clearFilter; ?>" class="button"><?php echo $button_clearFilter; ?></a>
+                </td>
+            </tr>
             <?php if ($chapters) { ?>
             <?php foreach ($chapters as $chapter) { ?>
             <tr>
@@ -42,7 +51,7 @@
                 <input type="checkbox" name="selected[]" value="<?php echo $chapter['chapter_id'].'#'.$chapter['title']; ?>" />
                 <?php } ?></td>
               <td class="left"><?php echo $chapter['title']; ?></td>
-              <td class="right"><?php echo $chapter['num']; ?></td>
+              <td class="left"><?php echo $chapter['num']; ?></td>
               <td class="right"><?php foreach ($chapter['action'] as $action) { ?>
                 [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
                 <?php } ?></td>
@@ -63,6 +72,17 @@
 <?php echo $footer; ?>
 
 <script>
+
+    function filter() {
+
+        url = 'index.php?route=manga/chapter&token=<?php echo $token; ?>';
+
+        url = makeFilter(url);
+
+        location = url;
+
+    }
+
     $(function(){
        $("#delWithFiles").click(function(){
            if($(this).attr("checked")) {
@@ -71,5 +91,14 @@
                $("input[name='delWithFiles']").val('0');
            }
        });
+
+
+        $(window).keydown(function(event){
+
+            if(event.keyCode == 13) {
+                filter();
+            }
+
+        });
     });
 </script>

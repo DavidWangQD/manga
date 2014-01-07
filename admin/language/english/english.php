@@ -38,6 +38,7 @@ $_['button_cancel']                 = 'Cancel';
 $_['button_clear']                  = 'Clear Log';
 $_['button_close']                  = 'Close';
 $_['button_filter']                 = 'Filter';
+$_['button_clearFilter']            = 'Clear Filter';
 $_['button_send']                   = 'Send';
 $_['button_edit']                   = 'Edit';
 $_['button_copy']                   = 'Copy';

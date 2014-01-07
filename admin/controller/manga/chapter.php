@@ -115,7 +115,24 @@ class ControllerMangaChapter extends Controller {
 		
 		$this->getList();	
 	}
-	
+
+    protected function makeFilter($params = array()) {
+
+        $result = array();
+
+        foreach($params as $param) {
+            if(isset($this->request->get[$param])) {
+                $result[$param] = $this->request->get[$param];
+                $this->data[$param] = $this->request->get[$param];
+            }else{
+                $this->data[$param] = '';
+            }
+        }
+
+        return $result;
+
+    }
+
 	protected function getList() {
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
@@ -146,7 +163,8 @@ class ControllerMangaChapter extends Controller {
 		$this->data['insert'] = $this->url->link('manga/chapter/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$this->data['delete'] = $this->url->link('manga/chapter/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$this->data['repair'] = $this->url->link('manga/chapter/repair', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		
+		$this->data['clearFilter'] = $this->url->link('manga/chapter', 'token=' . $this->session->data['token'], 'SSL');
+
 		$this->data['categories'] = array();
 		
 		$data = array(
@@ -155,11 +173,16 @@ class ControllerMangaChapter extends Controller {
 			'start' => ($page - 1) * $this->config->get('config_admin_limit'),
 			'limit' => $this->config->get('config_admin_limit'),
 		);
-				
+
+
+        $filters = $this->makeFilter(array('filter_title','filter_num'));
+        $params = array_merge($data,$filters);
+
 		$chapter_total = $this->model_manga_chapter->getTotalChapters();
 
-		$results = $this->model_manga_chapter->getChapters($data);
+		$results = $this->model_manga_chapter->getChapters($params);
 
+        $this->data['chapters'] = array();
 		foreach ($results as $result) {
 			$action = array();
 						
@@ -188,7 +211,11 @@ class ControllerMangaChapter extends Controller {
 		$this->data['button_insert'] = $this->language->get('button_insert');
 		$this->data['button_delete'] = $this->language->get('button_delete');
  		$this->data['button_repair'] = $this->language->get('button_repair');
- 
+ 		$this->data['button_filter'] = $this->language->get('button_filter');
+ 		$this->data['button_clearFilter'] = $this->language->get('button_clearFilter');
+
+        $this->data['token'] = $this->session->data['token'];
+
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
 		} else {
