@@ -38,7 +38,27 @@ function getURLVar(key) {
 			return '';
 		}
 	}
-} 
+}
+
+function makeFilter(url) {
+
+    var name = '';
+    var value = '';
+
+    $("input[name^='filter']").each(function(){
+
+        name = $(this).attr("name");
+        value = $(this).val();
+
+        if(value != '') {
+            url += '&' + name + '=' +  value;
+        }
+
+    });
+
+    return url;
+
+}
 
 $(document).ready(function() {
 	route = getURLVar('route');
