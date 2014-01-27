@@ -35,14 +35,28 @@
     <a class="carousel-control right" href="http://www.mangasee.com/#myCarousel" data-slide="next" data-original-title="" title="">›</a>
 </div>
 <h2>Hot Updates</h2>
+<?php if( !empty( $hotComics ) ){ ?>
+
+<?php foreach($hotComics as $comic ){ ?>
+
+    <a class="thumbnail"
+       style="display:inline-block; max-width:100px;-webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; border: none; "
+       title="" href="#"
+       data-original-title="Read Fairy Tail Chapter 362">
+        <img src="image/category/FairyTail.jpg" height="120px" width="100px">
+        <?php echo $comic['title']; ?>
+    </a>
+
+<?php } ?>
+<?php } ?>
 <div style="width:100%;">
+
     <a class="thumbnail" style="display:inline-block; max-width:100px;-webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; border: none; " title="" href="http://www.mangasee.com/manga/?series=FairyTail&chapter=362&index=1&page=1" data-original-title="Read Fairy Tail Chapter 362"><img src="image/category/FairyTail.jpg" height="120px" width="100px">  Fairy Tail 362</a>
     <a class="thumbnail" style="display:inline-block; max-width:100px;-webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; border: none; " title="" href="http://www.mangasee.com/manga/?series=Toriko&chapter=259&index=1&page=1" data-original-title="Read Toriko Chapter 259"><img src="image/category/Toriko.jpg" height="120px" width="100px">  Toriko 259</a>
     <a class="thumbnail" style="display:inline-block; max-width:100px;-webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; border: none; " title="" href="http://www.mangasee.com/manga/?series=Bleach&chapter=559&index=1&page=1" data-original-title="Read Bleach Chapter 559"><img src="image/category/Bleach.jpg" height="120px" width="100px">  Bleach 559</a>
     <a class="thumbnail" style="display:inline-block; max-width:100px;-webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; border: none; " title="" href="http://www.mangasee.com/manga/?series=Naruto&chapter=656&index=1&page=1" data-original-title="Read Naruto Chapter 656"><img src="image/category/Naruto.jpg" height="120px" width="100px">  Naruto 656</a>
     <a class="thumbnail" style="display:inline-block; max-width:100px;-webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; border: none; " title="" href="http://www.mangasee.com/manga/?series=OnePiece&chapter=729&index=1&page=1" data-original-title="Read One Piece Chapter 139"><img src="image/category/OnePiece.jpg" height="120px" width="100px">  One Piece 729</a>
-</div>
-<div style="width:100%; ">
+
     <a class="thumbnail" style="display:inline-block; max-width:100px;vertical-align:top;-webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; border: none; " title="" href="http://www.mangasee.com/manga/?series=TheBreakerNewWaves&chapter=139&index=1&page=1" data-original-title="Read The Breaker New Waves Chapter 139"><img src="image/category/TheBreakerNewWaves.jpg" height="120px" width="100px">  The Breaker New Waves 139</a>
     <a class="thumbnail" style="display:inline-block; max-width:100px;vertical-align:top;-webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; border: none; " title="" href="http://www.mangasee.com/manga/?series=KurokoNoBasket&chapter=240&index=1&page=1" data-original-title="Read Kuroko No Basket Chapter 240"><img src="image/category/KurokoNoBasket.jpg" height="120px" width="100px">  Kuroko No Basket 240</a>
     <a class="thumbnail" style="display:inline-block; max-width:100px;vertical-align:top;-webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; border: none; " title="" href="http://www.mangasee.com/manga/?series=HajimeNoIppo&chapter=1039&index=1&page=1" data-original-title="Read Hajime No Ippo Chapter 1039"><img src="image/category/HajimeNoIppo.jpg" height="120px" width="100px">  Hajime No Ippo 1039</a>
