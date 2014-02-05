@@ -1,6 +1,7 @@
 <div class="well">
     <h2>Top Manga</h2>
     <div id="top-listing">
+        <!--
         <hr class="top-hr">
         <a style="text-decoration:none; color:#000;" href="http://www.mangasee.com/manga/?series=OnePiece" data-original-title="" title="">One Piece</a>
         <hr class="top-hr">
@@ -21,5 +22,15 @@
         <a style="text-decoration:none; color:#000;" href="http://www.mangasee.com/manga/?series=Toriko" data-original-title="" title="">Toriko</a>
         <hr class="top-hr">
         <a style="text-decoration:none; color:#000;" href="http://www.mangasee.com/manga/?series=Eyeshield21" data-original-title="" title="">Eyeshield 21</a>
+        -->
+        <?php if( !empty($topComics) ){ ?>
+        <?php foreach($topComics as $comic){ ?>
+        <hr class="top-hr">
+        <a style="text-decoration:none; color:#000;"
+           href="#"
+           data-original-title="<?php echo $comic['title']?>"
+           title="<?php echo $comic['title']?>"><?php echo $comic['title']?></a>
+        <?php } ?>
+        <?php } ?>
     </div>
 </div>

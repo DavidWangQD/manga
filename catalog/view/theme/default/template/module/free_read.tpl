@@ -1,11 +1,19 @@
 <div class="well" style="background-color:#E6E6E6;border:#E6E6E6;">
     <h1>Read Free Manga Online..</h1>
     <p>Find the newest chapters of popular manga series such as
+        <?php if(!empty($newComics) ){ ?>
+        <?php foreach($newComics as $comic){ ?>
+        <a class="directory_link" href="#" data-original-title="" title=""><?php echo $comic['title']?></a>,
+        <?php } ?>
+        <?php } ?>etc.
+        <!--
         <a class="directory_link" href="#" data-original-title="" title="">Bleach</a>,
         <a class="directory_link" href="#" data-original-title="" title="">Naruto</a>,
         <a class="directory_link" href="#" data-original-title="" title="">One Piece</a>,
         <a class="directory_link" href="#" data-original-title="" title="">Fairy Tail</a>, etc.
+        -->
     </p>
+    <!--
     <div class="fb-like" style="margin-right:4px;"
          data-href="http://www.facebook.com/MangaSeeOfficial"
          data-send="false" data-layout="button_count"
@@ -13,7 +21,7 @@
 
          </div>
 
-
+-->
     <!--
     <div id="___plusone_0"
          style="text-indent: 0px; margin: 0px; padding: 0px; background-color: transparent; border-style: none;

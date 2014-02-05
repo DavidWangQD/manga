@@ -91,9 +91,6 @@ class ControllerExtensionModule extends Controller {
 			}
 		}
 
-        print_r( $files );
-//        print_r($this->data['extensions']);
-
 		$this->template = 'extension/module.tpl';
 		$this->children = array(
 			'common/header',

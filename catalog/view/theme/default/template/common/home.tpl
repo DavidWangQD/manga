@@ -21,6 +21,18 @@
     </ol>
     <!-- Carousel items -->
     <div class="carousel-inner">
+        <?php if(!empty($banner)){ ?>
+        <?php foreach( $banner as $key=>$ban ){  ?>
+            <div class="item <?php if($key == 0){ echo 'active'; } ?>">
+                <a href="<?php echo $ban['link'];?>"
+                   data-original-title="<?php echo $ban['name'];?>"
+                   title="<?php echo $ban['name'];?>">
+                    <img src="<?php echo $ban['image']?>" alt="<?php echo $ban['name'];?>" />
+                </a>
+            </div>
+        <?php } ?>
+        <?php } ?>
+        <!--
         <div class=" item"><a href="http://www.mangasee.com/manga/?series=BlackJoke" data-original-title="" title=""><img src="image/category/BlackJoke.jpg" alt="Black Joke"></a></div>
         <div class=" item"><a href="http://www.mangasee.com/manga/?series=TokyoESP" data-original-title="" title=""><img src="image/category/TokyoESP.jpg" alt="Tokyo ESP"></a></div>
         <div class=" item"><a href="http://www.mangasee.com/manga/?series=TenjouTenge" data-original-title="" title=""><img src="image/category/TenjouTenge.jpg" alt="Tenjou Tenge"></a></div>
@@ -29,12 +41,14 @@
         <div class="active item"><a href="http://www.mangasee.com/manga/?series=FengShenJi" data-original-title="" title=""><img src="image/category/FengShenJi.jpg" alt="Feng Shen Ji"></a></div>
         <div class=" item"><a href="http://www.mangasee.com/manga/?series=TerraForMars" data-original-title="" title=""><img src="image/category/TerraForMars.jpg" alt="Terra ForMars"></a></div>
         <div class=" item"><a target="_blank" href="https://www.facebook.com/MangaSeeOfficial" data-original-title="" title=""><img src="image/category/Facebook.jpg" alt="Like us on Facebook"></a></div>
+        -->
     </div>
     <!-- Carousel nav -->
     <a class="carousel-control left" href="http://www.mangasee.com/#myCarousel" data-slide="prev" data-original-title="" title="">‹</a>
     <a class="carousel-control right" href="http://www.mangasee.com/#myCarousel" data-slide="next" data-original-title="" title="">›</a>
 </div>
 <h2>Hot Updates</h2>
+    <div style="width:100%;">
 <?php if( !empty( $hotComics ) ){ ?>
 
 <?php foreach($hotComics as $comic ){ ?>
@@ -42,15 +56,15 @@
     <a class="thumbnail"
        style="display:inline-block; max-width:100px;-webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; border: none; "
        title="" href="#"
-       data-original-title="Read Fairy Tail Chapter 362">
-        <img src="image/category/FairyTail.jpg" height="120px" width="100px">
+       data-original-title="<?php echo $comic['title'];?>">
+        <img src="<?php echo $comic['image'];?>" height="120px" width="100px">
         <?php echo $comic['title']; ?>
     </a>
 
 <?php } ?>
 <?php } ?>
-<div style="width:100%;">
 
+        <!--
     <a class="thumbnail" style="display:inline-block; max-width:100px;-webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; border: none; " title="" href="http://www.mangasee.com/manga/?series=FairyTail&chapter=362&index=1&page=1" data-original-title="Read Fairy Tail Chapter 362"><img src="image/category/FairyTail.jpg" height="120px" width="100px">  Fairy Tail 362</a>
     <a class="thumbnail" style="display:inline-block; max-width:100px;-webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; border: none; " title="" href="http://www.mangasee.com/manga/?series=Toriko&chapter=259&index=1&page=1" data-original-title="Read Toriko Chapter 259"><img src="image/category/Toriko.jpg" height="120px" width="100px">  Toriko 259</a>
     <a class="thumbnail" style="display:inline-block; max-width:100px;-webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; border: none; " title="" href="http://www.mangasee.com/manga/?series=Bleach&chapter=559&index=1&page=1" data-original-title="Read Bleach Chapter 559"><img src="image/category/Bleach.jpg" height="120px" width="100px">  Bleach 559</a>
@@ -62,6 +76,7 @@
     <a class="thumbnail" style="display:inline-block; max-width:100px;vertical-align:top;-webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; border: none; " title="" href="http://www.mangasee.com/manga/?series=HajimeNoIppo&chapter=1039&index=1&page=1" data-original-title="Read Hajime No Ippo Chapter 1039"><img src="image/category/HajimeNoIppo.jpg" height="120px" width="100px">  Hajime No Ippo 1039</a>
     <a class="thumbnail" style="display:inline-block; max-width:100px;vertical-align:top;-webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; border: none; " title="" href="http://www.mangasee.com/manga/?series=Beelzebub&chapter=230&index=1&page=1" data-original-title="Read Beelzebub Chapter 230"><img src="image/category/Beelzebub.jpg" height="120px" width="100px">  Beelzebub 230</a>
     <a class="thumbnail" style="display:inline-block; max-width:100px;vertical-align:top;-webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; border: none; " title="" href="http://www.mangasee.com/manga/?series=Vagabond&chapter=320&index=1&page=1" data-original-title="Read Vagabond Chapter 320"><img src="image/category/Vagabond.jpg" height="120px" width="100px">  Vagabond 320</a>
+        -->
 </div>
 <hr>
 <h2>Latest Chapters</h2>
@@ -109,12 +124,13 @@
 
 <div class="span4">
     <?php echo $column_right; ?>
-
+<!--
     <script language="Javascript">
         var cpmstar_rnd=Math.round(Math.random()*999999);
         var cpmstar_pid=48777;
         document.writeln("<SCR"+"IPT language='Javascript' src='//server.cpmstar.com/view.aspx?poolid="+cpmstar_pid+"&script=1&rnd="+cpmstar_rnd+"'></SCR"+"IPT>");
     </script>
+    -->
 </div>
 </div>
 </div>

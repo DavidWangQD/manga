@@ -7,7 +7,7 @@ class ModelMangaManga extends Model {
      */
     function getHotComics(){
 
-        $sql = "SELECT m.manga_id, md.title, m.sort_order FROM " . DB_PREFIX . "manga AS m
+        $sql = "SELECT m.manga_id, md.title, m.sort_order, m.image FROM " . DB_PREFIX . "manga AS m
         LEFT JOIN " . DB_PREFIX . "manga_description AS md
         ON m.manga_id = md.manga_id";
 
@@ -37,7 +37,7 @@ class ModelMangaManga extends Model {
         }
 
         if( !empty( $limit )){
-            $sql .= "limit " . $limit['start'] . ', ' .$limit['num'];
+            $sql .= " limit " . $limit['start'] . ', ' .$limit['num'];
         }
 
 
