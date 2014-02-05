@@ -13,10 +13,10 @@ class ControllerCommonHome extends Controller {
         $this->template = 'default/template/common/home.tpl';
 
 		$this->children = array(
-			'common/free_read',
-			'common/my_comic',
-			'common/free_read',
-			'common/free_read',
+//			'common/free_read',
+//			'common/my_comic',
+//			'common/free_read',
+            'common/column_right',
 			'common/footer',
 			'common/header'
 		);
